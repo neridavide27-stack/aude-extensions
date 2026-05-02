@@ -1,0 +1,28 @@
+{
+  "name": "aude-extensions-marketplace",
+  "owner": {
+    "name": "Davide Neri",
+    "url": "https://github.com/neridavide27-stack"
+  },
+  "metadata": {
+    "description": "Marketplace personale di Davide. Contiene aude-extensions, il plugin di estensioni del sistema Aude.",
+    "version": "0.1.0"
+  },
+  "plugins": [
+    {
+      "name": "aude-extensions",
+      "source": {
+        "source": "github",
+        "repo": "neridavide27-stack/aude-extensions",
+        "ref": "main"
+      },
+      "description": "Estensioni personali per il sistema Aude. Si affianca a claude-obsidian senza modificarlo.",
+      "version": "0.1.0",
+      "author": {
+        "name": "Davide Neri",
+        "url": "https://github.com/neridavide27-stack"
+      },
+      "license": "MIT"
+    }
+  ]
+}

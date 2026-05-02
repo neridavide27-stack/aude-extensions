@@ -1,0 +1,21 @@
+{
+  "name": "aude-extensions",
+  "version": "0.1.0",
+  "description": "Estensioni personali di Davide per il sistema Aude. Comandi, skill e agenti aggiuntivi che operano in coordinamento con claude-obsidian, senza modificarlo. Implementa il pattern Adapter sopra il plugin claude-obsidian.",
+  "author": {
+    "name": "Davide Neri",
+    "url": "https://github.com/neridavide27-stack"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/neridavide27-stack/aude-extensions",
+  "repository": "https://github.com/neridavide27-stack/aude-extensions",
+  "keywords": [
+    "obsidian",
+    "knowledge-base",
+    "personal",
+    "italian",
+    "claude-obsidian-extension",
+    "karpathy-llm-wiki",
+    "aude"
+  ]
+}
