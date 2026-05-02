@@ -1,7 +1,7 @@
 {
   "name": "aude-extensions",
-  "version": "0.1.0",
-  "description": "Estensioni personali di Davide per il sistema Aude. Comandi, skill e agenti aggiuntivi che operano in coordinamento con claude-obsidian, senza modificarlo. Implementa il pattern Adapter sopra il plugin claude-obsidian.",
+  "version": "0.2.0",
+  "description": "Estensioni personali di Davide per il sistema Aude. Comandi, skill, agenti e hook aggiuntivi che operano in coordinamento con claude-obsidian, senza modificarlo. Implementa pattern Adapter, JIT folders, e pending workflow sopra il plugin claude-obsidian.",
   "author": {
     "name": "Davide Neri",
     "url": "https://github.com/neridavide27-stack"

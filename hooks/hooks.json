@@ -1,0 +1,15 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup|resume",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if [ -d wiki/_pending ]; then COUNT=$(find wiki/_pending -name '*.md' -not -name 'README.md' -type f 2>/dev/null | wc -l | tr -d ' '); if [ \"$COUNT\" -ge 20 ]; then echo \"Hai $COUNT pagine in wiki/_pending/. Soglia raggiunta (20). Vuoi processare la review queue?\"; elif [ \"$COUNT\" -gt 0 ]; then echo \"Pending: $COUNT pagine in attesa di review (soglia avviso: 20).\"; fi; fi"
+          }
+        ]
+      }
+    ]
+  }
+}
