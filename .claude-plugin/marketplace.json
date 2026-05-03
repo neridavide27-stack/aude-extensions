@@ -1,23 +1,23 @@
 {
-  "name": "aude-extensions-marketplace",
+  "name": "aude-plugin-marketplace",
   "owner": {
     "name": "Davide Neri",
     "url": "https://github.com/neridavide27-stack"
   },
   "metadata": {
-    "description": "Marketplace personale di Davide. Contiene aude-extensions, il plugin di estensioni del sistema Aude.",
-    "version": "0.1.0"
+    "description": "Marketplace personale di Davide. Contiene aude-plugin, il sistema principale di Aude (architettura vendor + custom, ADR 0013).",
+    "version": "0.3.0"
   },
   "plugins": [
     {
-      "name": "aude-extensions",
+      "name": "aude-plugin",
       "source": {
         "source": "github",
-        "repo": "neridavide27-stack/aude-extensions",
+        "repo": "neridavide27-stack/aude-plugin",
         "ref": "main"
       },
-      "description": "Estensioni personali per il sistema Aude. Si affianca a claude-obsidian senza modificarlo.",
-      "version": "0.1.0",
+      "description": "Repo principale del sistema Aude. Plugin Claude Code con skill, comandi, hook, agenti del sistema. Architettura vendor + custom: vendora codice dalle fonti e modifica internamente.",
+      "version": "0.3.0",
       "author": {
         "name": "Davide Neri",
         "url": "https://github.com/neridavide27-stack"

@@ -1,20 +1,20 @@
 {
-  "name": "aude-extensions",
-  "version": "0.2.0",
-  "description": "Estensioni personali di Davide per il sistema Aude. Comandi, skill, agenti e hook aggiuntivi che operano in coordinamento con claude-obsidian, senza modificarlo. Implementa pattern Adapter, JIT folders, e pending workflow sopra il plugin claude-obsidian.",
+  "name": "aude-plugin",
+  "version": "0.3.0",
+  "description": "Repo principale del sistema Aude di Davide Neri. Plugin Claude Code che ospita skill, comandi, hook e agenti del sistema. Architettura 'vendor + custom' (ADR 0013): i contributi dalle repo fonti (claude-obsidian, future) vengono copiati qui e modificati internamente. Workflow JIT folders + pending integrato.",
   "author": {
     "name": "Davide Neri",
     "url": "https://github.com/neridavide27-stack"
   },
   "license": "MIT",
-  "homepage": "https://github.com/neridavide27-stack/aude-extensions",
-  "repository": "https://github.com/neridavide27-stack/aude-extensions",
+  "homepage": "https://github.com/neridavide27-stack/aude-plugin",
+  "repository": "https://github.com/neridavide27-stack/aude-plugin",
   "keywords": [
     "obsidian",
     "knowledge-base",
     "personal",
     "italian",
-    "claude-obsidian-extension",
+    "vendor-custom",
     "karpathy-llm-wiki",
     "aude"
   ]
