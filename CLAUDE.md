@@ -14,6 +14,25 @@ purpose: plugin Claude Code di Davide per estensioni del sistema Aude
 
 Vantaggio: questo plugin **non ha upstream**, quindi zero conflitti per sempre.
 
+## Versione attuale: v0.2.0 (2026-05-02)
+
+- ✅ Hook SessionStart per pending count (vedi `hooks/hooks.json`)
+- ✅ Comando giocattolo `/saluta-aude` (in `commands/`)
+- ⏳ Comandi pending da implementare (Tier 1 roadmap): `/promote`, `/save-pending`
+- ⏳ Comandi pending Tier 2: `/ingest-pending`, `/autoresearch-pending`, `/discard`
+- ⏳ Config plugin (`userConfig`) per opt-out pending — Tier 2
+
+Riferimento completo: `~/Developer/aude-platform/roadmap.md`.
+
+## Workflow pending-first del vault Aude
+
+Il vault Aude usa il workflow "JIT folders + pending" (ADR 0011). Significato per i comandi che implementerai qui:
+
+- I nuovi comandi che generano pagine wiki devono filare in `wiki/_pending/`, non direttamente in `wiki/<folder>/`
+- Pre-popolare frontmatter con 3 sezioni: standard + type-specific + estensione pending (`pending: true`, `proposed_target`, `proposed_filename`, `generated_by`)
+- Status default: `seed` (vedi ADR 0012)
+- Promozione tramite comando esplicito di Davide (`/promote`)
+
 ## Struttura
 
 ```
