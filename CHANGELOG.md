@@ -50,7 +50,7 @@ Hook attivo per **tutti i progetti** dove aude-extensions è installato. Control
 
 ### Aggiunto
 
-- Setup iniziale del plugin: `.claude-plugin/plugin.json`, `.claude-plugin/marketplace.json`
+- Setup iniziale del plugin: `.claude/plugin.json`, `.claude/marketplace.json`
 - Primo comando di prova `/saluta-aude` (verifica del flusso completo: comando → plugin → vault)
 - Struttura cartelle: `commands/`, `skills/`, `hooks/`, `agents/`
 - File `LICENSE` (MIT)

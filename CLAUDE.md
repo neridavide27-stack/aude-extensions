@@ -1,6 +1,6 @@
 # CLAUDE.md — aude-extensions (in transizione a `aude-plugin`)
 
-> **Sei in `~/Developer/aude-extensions/`. Questa è la REPO PRINCIPALE di Davide** — il plugin Claude-plugin Code dove vivono tutte le skill, comandi, hook, agenti del suo sistema.
+> **Sei in `~/Developer/aude-extensions/`. Questa è la REPO PRINCIPALE di Davide** — il plugin Claude Code dove vivono tutte le skill, comandi, hook, agenti del suo sistema.
 
 > **Aggiornamento 2026-05-03 (ADR 0013):** la repo cambia scopo e nome.
 > - **Vecchio scopo:** estensioni del fork claude-obsidian via Adapter pattern
@@ -11,7 +11,7 @@
 
 **Tutte le modifiche al sistema vivono qui.** Le repo fonti (oggi `claude-obsidian/`, in futuro N) restano intatte. Quando vuoi modificare una skill di una fonte, la copi qui e la modifichi qui.
 
-Vedi `~/Developer/aude-docs/adr/0013-architettura-vendor-custom-plugin.md` per la decisione architetturale completa.
+Vedi `~/Developer/aude-docs/decisioni/0013-architettura-vendor-custom-plugin.md` per la decisione architetturale completa.
 
 Vantaggio: questa repo **non ha upstream**, quindi zero conflitti per sempre. Tutto è sotto il tuo controllo.
 
@@ -47,7 +47,7 @@ Il vault Aude usa il workflow "JIT folders + pending" (ADR 0011). Significato pe
 
 ```
 aude-extensions/   (→ rinominata in `aude-plugin`)
-├── .claude-plugin/
+├── .claude/
 │   ├── plugin.json          ← descrizione del plugin (versione, autore)
 │   └── marketplace.json     ← descrizione del marketplace
 ├── commands/                ← slash commands (es. /saluta-aude-plugin)
@@ -72,7 +72,7 @@ Modifica diretta del file `skills/<nome>/SKILL.md`. Standard.
    ```bash
    cp ~/Developer/_forks/claude-obsidian/skills/<nome>/SKILL.md ~/Developer/aude-plugin/skills/<nome>/SKILL.md
    ```
-2. Aggiungi voce in `~/Developer/aude-docs/upstream-watch/claude-obsidian.md` (skill copiata, modifiche pianificate)
+2. Aggiungi voce in `~/Developer/aude-docs/tracking-fonti/claude-obsidian.md` (skill copiata, modifiche pianificate)
 3. Modifica liberamente la copia in aude-plugin
 4. Commit + push + plugin update
 
@@ -86,16 +86,16 @@ Procedura:
 1. `git clone <repo>` in `~/Developer/<nome-fonte>/`
 2. Studia cosa fa la fonte
 3. Copia le skill che ti interessano in aude-plugin (caso B)
-4. Crea `~/Developer/aude-docs/upstream-watch/<nome-fonte>.md` per tracking
+4. Crea `~/Developer/aude-docs/tracking-fonti/<nome-fonte>.md` per tracking
 
 ## Workflow per ogni commit
 
 1. Modifichi/crei file in `commands/`, `skills/`, `hooks/`, `agents/`
 2. Aggiorni `CHANGELOG.md` (sezione `[Unreleased] → Aggiunto/Modificato`)
-3. Bump versione in `.claude-plugin/plugin.json` (semver: nuova feature = `0.x.0 → 0.x+1.0`, bugfix = `0.x.y → 0.x.(y+1)`)
+3. Bump versione in `.claude/plugin.json` (semver: nuova feature = `0.x.0 → 0.x+1.0`, bugfix = `0.x.y → 0.x.(y+1)`)
 4. `git add . && git commit && git push`
-5. In Claude-plugin Code: `claude-plugin plugin update aude-plugin` per scaricare la nuova versione
-6. Riavvio Claude-plugin Code → modifica disponibile
+5. In Claude Code: `claude-plugin plugin update aude-plugin` per scaricare la nuova versione
+6. Riavvio Claude Code → modifica disponibile
 
 ## Convenzioni di naming
 
@@ -113,7 +113,7 @@ Salto importante previsto: `0.2.0 → 0.3.0` quando avverrà la copia iniziale d
 
 ## Test prima di pushare
 
-1. Lancia il comando in Claude-plugin Code (su una sessione di test)
+1. Lancia il comando in Claude Code (su una sessione di test)
 2. Verifica che faccia quello che ci si aspetta
 3. Solo dopo: commit + push + plugin update
 
@@ -121,6 +121,6 @@ Salto importante previsto: `0.2.0 → 0.3.0` quando avverrà la copia iniziale d
 
 - [README.md](README.md)
 - [CHANGELOG.md](CHANGELOG.md)
-- `~/Developer/aude-docs/adr/0013-architettura-vendor-custom-plugin.md` — architettura corrente
-- `~/Developer/aude-docs/upstream-watch/claude-obsidian.md` — tracking della fonte principale
+- `~/Developer/aude-docs/decisioni/0013-architettura-vendor-custom-plugin.md` — architettura corrente
+- `~/Developer/aude-docs/tracking-fonti/claude-obsidian.md` — tracking della fonte principale
 - `~/Developer/aude-docs/roadmap.md` — funzionalità future

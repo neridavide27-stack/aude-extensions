@@ -36,7 +36,7 @@ claude plugin install aude-extensions@aude-extensions-marketplace
 
 ```
 aude-extensions/
-├── .claude-plugin/
+├── .claude/
 │   ├── plugin.json
 │   └── marketplace.json
 ├── commands/
