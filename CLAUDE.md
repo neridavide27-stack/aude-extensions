@@ -1,34 +1,44 @@
----
-type: project-level memory
-project: aude-extensions
-purpose: plugin Claude Code di Davide per estensioni del sistema Aude
----
+# CLAUDE.md — aude-extensions (in transizione a `aude-plugin`)
 
-# CLAUDE.md — aude-extensions
+> **Sei in `~/Developer/aude-extensions/`. Questa è la REPO PRINCIPALE di Davide** — il plugin Claude-plugin Code dove vivono tutte le skill, comandi, hook, agenti del suo sistema.
 
-> **Sei in `~/Developer/aude-extensions/`. Questo è il PLUGIN PERSONALE di Davide.** Qui vivono comandi, skill, agenti, hook che estendono il sistema Aude.
+> **Aggiornamento 2026-05-03 (ADR 0013):** la repo cambia scopo e nome.
+> - **Vecchio scopo:** estensioni del fork claude-obsidian via Adapter pattern
+> - **Nuovo scopo:** repo principale di Davide (vendor + custom). Inizialmente popolata copiando dal fork, poi modificata progressivamente.
+> - **Rinomina prevista:** `aude-extensions` → `aude-plugin` (Fase B di ADR 0013)
 
-## Regola fondamentale
+## Regola fondamentale (aggiornata)
 
-**Le funzioni nuove di Davide vivono qui, NON nel fork claude-obsidian.** Vedi `~/Developer/aude-platform/adr/0003-strategia-fork-leggero.md`.
+**Tutte le modifiche al sistema vivono qui.** Le repo fonti (oggi `claude-obsidian/`, in futuro N) restano intatte. Quando vuoi modificare una skill di una fonte, la copi qui e la modifichi qui.
 
-Vantaggio: questo plugin **non ha upstream**, quindi zero conflitti per sempre.
+Vedi `~/Developer/aude-platform/adr/0013-architettura-vendor-custom-plugin.md` per la decisione architetturale completa.
+
+Vantaggio: questa repo **non ha upstream**, quindi zero conflitti per sempre. Tutto è sotto il tuo controllo.
 
 ## Versione attuale: v0.2.0 (2026-05-02)
 
 - ✅ Hook SessionStart per pending count (vedi `hooks/hooks.json`)
-- ✅ Comando giocattolo `/saluta-aude` (in `commands/`)
-- ⏳ Comandi pending da implementare (Tier 1 roadmap): `/promote`, `/save-pending`
-- ⏳ Comandi pending Tier 2: `/ingest-pending`, `/autoresearch-pending`, `/discard`
-- ⏳ Config plugin (`userConfig`) per opt-out pending — Tier 2
+- ✅ Comando giocattolo `/saluta-aude-plugin` (in `commands/`)
 
-Riferimento completo: `~/Developer/aude-platform/roadmap.md`.
+## Roadmap a breve (post-rinomina e setup ADR 0013)
 
-## Workflow pending-first del vault Aude
+Riferimento completo in `~/Developer/aude-platform/roadmap.md`.
 
-Il vault Aude usa il workflow "JIT folders + pending" (ADR 0011). Significato per i comandi che implementerai qui:
+**Tier 0 — Setup architettura ADR 0013:**
+- Rinomina repo `aude-extensions` → `aude-plugin` su GitHub e localmente
+- Copia contenuto del fork in aude-plugin (skills, commands, hooks, agents)
+- Aggiornamento `plugin.json` (nome, descrizione)
+- Disinstallazione plugin claude-obsidian, installazione plugin aude-plugin
 
-- I nuovi comandi che generano pagine wiki devono filare in `wiki/_pending/`, non direttamente in `wiki/<folder>/`
+**Tier 1 — Prime modifiche:**
+- Skill `/save` modificata: italiano + pending workflow nativo
+- Comando nuovo `/promote`: sposta file da `_pending/` a wiki destinazione
+
+## Workflow del vault Aude (ADR 0011)
+
+Il vault Aude usa il workflow "JIT folders + pending" (ADR 0011). Significato per le skill che modifichi qui:
+
+- Le skill che producono pagine wiki (es. `/save`, `/wiki-ingest`, `/autoresearch`) devono filare in `wiki/_pending/`, non direttamente in `wiki/<folder>/`
 - Pre-popolare frontmatter con 3 sezioni: standard + type-specific + estensione pending (`pending: true`, `proposed_target`, `proposed_filename`, `generated_by`)
 - Status default: `seed` (vedi ADR 0012)
 - Promozione tramite comando esplicito di Davide (`/promote`)
@@ -36,11 +46,11 @@ Il vault Aude usa il workflow "JIT folders + pending" (ADR 0011). Significato pe
 ## Struttura
 
 ```
-aude-extensions/
+aude-extensions/   (→ rinominata in `aude-plugin`)
 ├── .claude-plugin/
 │   ├── plugin.json          ← descrizione del plugin (versione, autore)
 │   └── marketplace.json     ← descrizione del marketplace
-├── commands/                ← slash commands (es. /saluta-aude)
+├── commands/                ← slash commands (es. /saluta-aude-plugin)
 ├── skills/                  ← skill complete (definite via SKILL.md con frontmatter)
 ├── hooks/                   ← hook automatici (PreToolUse, SessionStart, ecc.)
 ├── agents/                  ← subagent specializzati
@@ -50,57 +60,60 @@ aude-extensions/
 └── CLAUDE.md                ← questo file
 ```
 
-## Come aggiungere un comando nuovo
+## Workflow per modifiche
 
-1. Crea `commands/<nome>.md` con frontmatter `description:` + corpo del prompt
-2. Aggiorna `CHANGELOG.md` (sezione `[Unreleased] → Aggiunto`)
-3. Bump versione in `.claude-plugin/plugin.json` (semver: nuova feature = `0.x.0 → 0.x+1.0`)
+### Caso A — Modifico una skill esistente in aude-plugin
+
+Modifica diretta del file `skills/<nome>/SKILL.md`. Standard.
+
+### Caso B — Voglio modificare una skill che esiste solo in una fonte
+
+1. Copia il file dalla fonte in aude-plugin:
+   ```bash
+   cp ~/Developer/claude-obsidian/skills/<nome>/SKILL.md ~/Developer/aude-plugin/skills/<nome>/SKILL.md
+   ```
+2. Aggiungi voce in `~/Developer/aude-platform/upstream-watch/claude-obsidian.md` (skill copiata, modifiche pianificate)
+3. Modifica liberamente la copia in aude-plugin
+4. Commit + push + plugin update
+
+### Caso C — Voglio una skill totalmente nuova
+
+Crea direttamente in `skills/<nome>/SKILL.md` o `commands/<nome>.md`. Standard.
+
+### Caso D — Aggiungo una nuova fonte
+
+Procedura:
+1. `git clone <repo>` in `~/Developer/<nome-fonte>/`
+2. Studia cosa fa la fonte
+3. Copia le skill che ti interessano in aude-plugin (caso B)
+4. Crea `~/Developer/aude-platform/upstream-watch/<nome-fonte>.md` per tracking
+
+## Workflow per ogni commit
+
+1. Modifichi/crei file in `commands/`, `skills/`, `hooks/`, `agents/`
+2. Aggiorni `CHANGELOG.md` (sezione `[Unreleased] → Aggiunto/Modificato`)
+3. Bump versione in `.claude-plugin/plugin.json` (semver: nuova feature = `0.x.0 → 0.x+1.0`, bugfix = `0.x.y → 0.x.(y+1)`)
 4. `git add . && git commit && git push`
-5. In Claude Code: `claude plugin update aude-extensions` per scaricare la nuova versione
-6. Riavvio Claude Code → il comando è disponibile come `/aude-extensions:<nome>`
-
-## Come aggiungere una skill
-
-1. Crea cartella `skills/<nome>/`
-2. Crea `skills/<nome>/SKILL.md` con frontmatter `name:`, `description:`, `allowed-tools:` + corpo
-3. Idem per CHANGELOG, versione, push, plugin update
-
-## Pattern raccomandati per ogni tipo di modifica
-
-### "Voglio modificare un comando esistente di claude-obsidian"
-
-→ **Adapter pattern**: crea un comando nuovo in `aude-extensions/commands/` che chiama internamente il comando originale.
-
-Esempio: invece di modificare `claude-obsidian/commands/autoresearch.md`, crea `aude-extensions/commands/deep-research.md` che:
-1. Mappa il dominio (codice tuo)
-2. Per ogni topic, chiama `/autoresearch` (codice originale, intatto)
-3. Sintetizza i risultati (codice tuo)
-
-Originale `/autoresearch` resta funzionante. Tu usi `/deep-research`. Conflitti zero.
-
-### "Voglio tradurre un comando in italiano"
-
-→ **File parallelo**: crea `commands/<nome>-it.md` qui in aude-extensions. Il file originale di claude-obsidian non viene toccato.
-
-### "Voglio aggiungere una funzione completamente nuova"
-
-→ Plugin separato (qui): `commands/<nuova-funzione>.md`.
+5. In Claude-plugin Code: `claude-plugin plugin update aude-plugin` per scaricare la nuova versione
+6. Riavvio Claude-plugin Code → modifica disponibile
 
 ## Convenzioni di naming
 
-- **Comandi italiani**: suffisso `-it` (es. `wiki-it`, `save-it`)
-- **Comandi nuovi**: nome semantico in italiano o inglese, neutrale (es. `deep-research`, `morning-review`)
-- **Skill**: cartelle con kebab-case (es. `mia-skill`, `gestione-task`)
+- **Skill copiate da fonti**: stesso nome dell'originale (es. `skills/save/`, `skills/autoresearch/`). Niente suffissi `-it` o `-aude-plugin`. Modifica diretta nel file.
+- **Skill nuove**: nome semantico in italiano (es. `skills/diary/`, `skills/weekly-review/`)
+- **Comandi**: kebab-case in italiano (es. `comandi/diario`) o nome internazionale (es. `commands/diary`)
 
 ## Versioning (Semantic Versioning)
 
-- `0.x.0 → 0.(x+1).0`: nuova feature (comando/skill aggiunto)
+- `0.x.0 → 0.(x+1).0`: nuova feature (skill/comando aggiunto, modifica funzionale rilevante)
 - `0.x.y → 0.x.(y+1)`: bugfix o miglioramento minore
 - `0.x.y → 1.0.0`: prima release stabile (quando il plugin è "pronto")
 
+Salto importante previsto: `0.2.0 → 0.3.0` quando avverrà la copia iniziale dal fork (Fase B di ADR 0013, prima espansione massiccia del plugin).
+
 ## Test prima di pushare
 
-1. Lancia il comando in Claude Code (su una sessione di test)
+1. Lancia il comando in Claude-plugin Code (su una sessione di test)
 2. Verifica che faccia quello che ci si aspetta
 3. Solo dopo: commit + push + plugin update
 
@@ -108,5 +121,6 @@ Originale `/autoresearch` resta funzionante. Tu usi `/deep-research`. Conflitti 
 
 - [README.md](README.md)
 - [CHANGELOG.md](CHANGELOG.md)
-- `~/Developer/aude-platform/03-pattern-professionali.md` — pattern in dettaglio
-- `~/Developer/aude-platform/adr/0003-strategia-fork-leggero.md` — perché vivere qui
+- `~/Developer/aude-platform/adr/0013-architettura-vendor-custom-plugin.md` — architettura corrente
+- `~/Developer/aude-platform/upstream-watch/claude-obsidian.md` — tracking della fonte principale
+- `~/Developer/aude-platform/roadmap.md` — funzionalità future
