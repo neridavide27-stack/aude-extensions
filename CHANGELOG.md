@@ -42,7 +42,7 @@ Questa è la prima versione del plugin con contenuto sostanziale. Inizia il perc
 
 ### Note di rilascio
 
-Prima implementazione del workflow "pending + JIT folders" deciso in `aude-platform/adr/0011`. Solo la parte hook (review queue counter); i comandi `/save-pending`, `/promote`, ecc. saranno implementati in una iterazione successiva (vedi roadmap.md sezione Tier 1).
+Prima implementazione del workflow "pending + JIT folders" deciso in `aude-docs/adr/0011`. Solo la parte hook (review queue counter); i comandi `/save-pending`, `/promote`, ecc. saranno implementati in una iterazione successiva (vedi roadmap.md sezione Tier 1).
 
 Hook attivo per **tutti i progetti** dove aude-extensions è installato. Controlla la presenza di `wiki/_pending/` (cartella di staging del vault Aude) e mostra messaggio solo se esiste e contiene file. In altri progetti, silenzioso.
 

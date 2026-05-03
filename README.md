@@ -10,7 +10,7 @@ Plugin Claude Code che si **affianca** al plugin [`AgriciDaniel/claude-obsidian`
 
 > *"Don't fork what you can extend. Don't extend what you can configure."*
 
-Le modifiche di Davide al sistema Aude vivono qui, non nel fork di claude-obsidian. Questo plugin **non ha upstream**, vita autonoma, zero conflitti per sempre. Vedi documentazione completa in [`aude-platform`](https://github.com/neridavide27-stack/aude-platform).
+Le modifiche di Davide al sistema Aude vivono qui, non nel fork di claude-obsidian. Questo plugin **non ha upstream**, vita autonoma, zero conflitti per sempre. Vedi documentazione completa in [`aude-docs`](https://github.com/neridavide27-stack/aude-docs).
 
 ## Comandi disponibili
 
@@ -52,7 +52,7 @@ aude-extensions/
 
 ## Sviluppo
 
-Per ogni nuovo comando/skill, vedi la guida completa in [`aude-platform`](https://github.com/neridavide27-stack/aude-platform).
+Per ogni nuovo comando/skill, vedi la guida completa in [`aude-docs`](https://github.com/neridavide27-stack/aude-docs).
 
 Il flusso è:
 1. Crea il file in `commands/<nome>.md` o `skills/<nome>/SKILL.md`

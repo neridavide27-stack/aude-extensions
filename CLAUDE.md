@@ -11,7 +11,7 @@
 
 **Tutte le modifiche al sistema vivono qui.** Le repo fonti (oggi `claude-obsidian/`, in futuro N) restano intatte. Quando vuoi modificare una skill di una fonte, la copi qui e la modifichi qui.
 
-Vedi `~/Developer/aude-platform/adr/0013-architettura-vendor-custom-plugin.md` per la decisione architetturale completa.
+Vedi `~/Developer/aude-docs/adr/0013-architettura-vendor-custom-plugin.md` per la decisione architetturale completa.
 
 Vantaggio: questa repo **non ha upstream**, quindi zero conflitti per sempre. Tutto è sotto il tuo controllo.
 
@@ -22,7 +22,7 @@ Vantaggio: questa repo **non ha upstream**, quindi zero conflitti per sempre. Tu
 
 ## Roadmap a breve (post-rinomina e setup ADR 0013)
 
-Riferimento completo in `~/Developer/aude-platform/roadmap.md`.
+Riferimento completo in `~/Developer/aude-docs/roadmap.md`.
 
 **Tier 0 — Setup architettura ADR 0013:**
 - Rinomina repo `aude-extensions` → `aude-plugin` su GitHub e localmente
@@ -70,9 +70,9 @@ Modifica diretta del file `skills/<nome>/SKILL.md`. Standard.
 
 1. Copia il file dalla fonte in aude-plugin:
    ```bash
-   cp ~/Developer/claude-obsidian/skills/<nome>/SKILL.md ~/Developer/aude-plugin/skills/<nome>/SKILL.md
+   cp ~/Developer/_forks/claude-obsidian/skills/<nome>/SKILL.md ~/Developer/aude-plugin/skills/<nome>/SKILL.md
    ```
-2. Aggiungi voce in `~/Developer/aude-platform/upstream-watch/claude-obsidian.md` (skill copiata, modifiche pianificate)
+2. Aggiungi voce in `~/Developer/aude-docs/upstream-watch/claude-obsidian.md` (skill copiata, modifiche pianificate)
 3. Modifica liberamente la copia in aude-plugin
 4. Commit + push + plugin update
 
@@ -86,7 +86,7 @@ Procedura:
 1. `git clone <repo>` in `~/Developer/<nome-fonte>/`
 2. Studia cosa fa la fonte
 3. Copia le skill che ti interessano in aude-plugin (caso B)
-4. Crea `~/Developer/aude-platform/upstream-watch/<nome-fonte>.md` per tracking
+4. Crea `~/Developer/aude-docs/upstream-watch/<nome-fonte>.md` per tracking
 
 ## Workflow per ogni commit
 
@@ -121,6 +121,6 @@ Salto importante previsto: `0.2.0 → 0.3.0` quando avverrà la copia iniziale d
 
 - [README.md](README.md)
 - [CHANGELOG.md](CHANGELOG.md)
-- `~/Developer/aude-platform/adr/0013-architettura-vendor-custom-plugin.md` — architettura corrente
-- `~/Developer/aude-platform/upstream-watch/claude-obsidian.md` — tracking della fonte principale
-- `~/Developer/aude-platform/roadmap.md` — funzionalità future
+- `~/Developer/aude-docs/adr/0013-architettura-vendor-custom-plugin.md` — architettura corrente
+- `~/Developer/aude-docs/upstream-watch/claude-obsidian.md` — tracking della fonte principale
+- `~/Developer/aude-docs/roadmap.md` — funzionalità future
