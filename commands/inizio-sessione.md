@@ -6,7 +6,7 @@ description: "Apri una sessione di lavoro su aude-docs: refresh roadmap snapshot
 
 ## Come usarlo
 
-**Cosa fa**: apre una sessione di lavoro su `aude-docs/` mostrando in chat un riepilogo strutturato dello stato corrente del progetto. Quattro pezzi: cose tattiche da fare (dalla roadmap manuale), tre tabelle del backlog RFC (popolate dallo snapshot generato da `/aggiorna-roadmap`), e i task in sospeso dalla sessione precedente (da `handoff.md`).
+**Cosa fa**: apre una sessione di lavoro su `aude-docs/` mostrando in chat un riepilogo strutturato dello stato corrente del progetto. Quattro pezzi: cose tattiche da fare (dalla roadmap manuale), tre tabelle del backlog RFC (popolate dallo snapshot generato dal hook + script Python), e il **post-sessione log della sessione precedente** (da `handoff.md`, sempre popolato col template a 9 sezioni — vedi `/fine-sessione`).
 
 **Perché esiste**: senza questo comando, le regole di "lettura iniziale" vivono nel `CLAUDE.md` root come istruzioni passive — caricate in contesto ma non si trasformano in azione. Con un trigger esplicito, l'apertura di sessione diventa azione concreta e prevedibile: tu lanci `/inizio-sessione`, Claude ti dice esattamente cosa c'è in pipeline.
 
@@ -48,7 +48,7 @@ Output di questo step in chat: niente (è preparazione interna). Se lo script pr
 Usa **Read** sui 3 file (path relativi a `aude-docs/`):
 
 - `roadmap.md` — per la sezione manuale "Cose da fare"
-- `handoff.md` — per i task in sospeso della sessione precedente
+- `handoff.md` — post-sessione log della sessione precedente (sempre popolato, template a 9 sezioni)
 - `.cache/roadmap-snapshot.md` — per le 3 tabelle RFC (appena rigenerato dallo Step 1)
 
 ### Step 3 — Dichiara la lettura
@@ -79,7 +79,7 @@ Da tenere d'occhio:
 <tabella della sezione "## Da tenere d'occhio" di .cache/roadmap-snapshot.md, copiata testualmente>
 
 📌 Handoff (sessione precedente):
-<contenuto integrale di handoff.md (corpo, escluso frontmatter)>
+<contenuto integrale di handoff.md, body, escluso frontmatter — sempre 9 sezioni del template, vedi /fine-sessione>
 ```
 
 ### Step 5 — Stop, attendi l'utente
@@ -89,9 +89,7 @@ Da tenere d'occhio:
 ## Edge cases
 
 - **`.cache/roadmap-snapshot.md` non esiste** → lo Step 1 (`/aggiorna-roadmap`) lo crea. Procedi normalmente.
-- **`handoff.md` vuoto o "semanticamente vuoto"** → al posto del contenuto scrivi: *"Nessun task in sospeso. Sessione pulita."*. Considera "semanticamente vuoto" il file che:
-  - Ha solo frontmatter (niente body), **oppure**
-  - Contiene nel body la frase marker **"nessun task in sospeso"** (case-insensitive, anche dentro grassetto come `**Stato attuale: nessun task in sospeso.**`). Questa è la convenzione standard di `handoff.md` quando non ci sono task spezzati: il body resta con questa nota fissa fino a quando Claude scrive un vero handoff strutturato.
+- **`handoff.md` mancante o privo di body** → segnala l'anomalia (`/fine-sessione` lo popola sempre, quindi mancante = bug o prima esecuzione) e procedi mostrando ciò che c'è. Non c'è più il caso "vuoto/marker": il file è sempre col template a 9 sezioni (vedi `/fine-sessione`).
 - **`roadmap.md` "Cose da fare" vuota** → al posto della lista scrivi: *"Nessuna voce manuale."*
 - **3 sezioni RFC tutte vuote** nello snapshot → ognuna mostra "(nessuna)" come definito da `/aggiorna-roadmap`. Va bene così.
 - **`roadmap.md` o `handoff.md` non esistono** → segnala l'anomalia e procedi con quello che hai.
