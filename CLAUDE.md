@@ -1,51 +1,44 @@
-# CLAUDE.md — aude-plugin (Plugin Claude Code di Davide)
+# CLAUDE.md — `plugin/` (codice del Plugin Claude Code)
 
-> **Sei in `~/Developer/aude-plugin/`.** Questa è la **REPO PRINCIPALE di Davide** — il plugin Claude Code che esegue tutte le skill, comandi, hook, agenti del sistema Aude.
+> **Sei in `~/Developer/Aude/plugin/`.** Sotto-cartella del monorepo Aude che ospita il **codice** del plugin Claude Code: skill, comandi, hook, agenti.
 
 ---
 
-## I 4 piani del progetto Aude (mai confonderli)
+## Posizione nel monorepo Aude
 
-Architettura formalizzata in [decisions/0013](https://github.com/neridavide27-stack/aude-docs/blob/main/decisions/0013-architettura-vendor-custom-plugin.md):
+Dal 2026-05-05 ([[../decisions/0007-monorepo-aude|ADR 0007]]) il sistema Aude vive in `~/Developer/Aude/` come monorepo unico. Le 4 aree sono:
 
 | Cartella | Ruolo | Cosa contiene |
 |---|---|---|
-| `~/Desktop/Aude/` | **Conoscenza personale** | Vault Obsidian: note, fonti grezze, no codice |
-| `~/Developer/aude-plugin/` (qui) | **Sviluppo concreto del sistema** | Plugin Claude Code installato: skill, comandi, hook, agenti |
-| `~/Developer/aude-docs/` | **Engineering handbook** | ADR, RFC, design docs, runbook, sources-tracking, conversations |
-| `~/Developer/_forks/` | **Repo fonti (vendoring)** | Repo open source intatte (oggi `claude-obsidian/`) |
+| `~/Developer/Aude/wiki/` | **Knowledge base personale** | Note Obsidian, fonti grezze |
+| `~/Developer/Aude/plugin/` (qui) | **Codice plugin** | Skill, comandi, hook, agenti |
+| `~/Developer/Aude/` (root) | **Engineering handbook** | ADR, RFC, design, runbook, sources-tracking |
+| `~/Developer/Aude/sources-tracking/forks/` | **Repo fonti (vendoring)** | Repo open source intatte |
+
+`plugin/` è un **repo Git autonomo** ignorato dal `.gitignore` del monorepo (vedi [[../decisions/0005-aude-plugin-dentro-aude-docs|ADR 0005]]).
 
 ### Cosa significa per Claude (AI agent) che lavora qui
 
-Sei in **aude-plugin**, il **codice** del sistema. Qui:
+Sei in `plugin/`, il **codice** del sistema. Qui:
 - ✅ Modifichi/crei skill, comandi, hook, agenti
-- ✅ Esegui vendoring (copi da `_forks/<fonte>/` qui)
+- ✅ Esegui vendoring (copi da `../sources-tracking/forks/<fonte>/` qui)
 - ✅ Aggiorni `plugin.json`, `marketplace.json`, `CHANGELOG.md`
-- ❌ **Non scrivere documentazione di progetto** — quella vive in `~/Developer/aude-docs/`
-- ❌ **Non scrivere ADR/RFC** — quelli vivono in `~/Developer/aude-docs/`
-- ❌ **Non modificare le repo fonti** in `~/Developer/_forks/`
-- ❌ **Non scrivere note personali** — quelle vivono nel vault `~/Desktop/Aude/wiki/`
+- ❌ **Non scrivere documentazione di progetto** — quella vive in `../decisions/`, `../proposals/`, `../runbook/`
+- ❌ **Non scrivere ADR/RFC** — quelli vivono in `../decisions/` e `../proposals/`
+- ❌ **Non modificare le repo fonti** in `../sources-tracking/forks/`
+- ❌ **Non scrivere note personali** — quelle vivono in `../wiki/`
 
 ---
 
 ## Stato attuale
 
-- **Versione:** v0.3.0 (2026-05-03)
-- **Status Fase B di ADR 0013:** completata
-  - Vendoring iniziale fatto: 11 skill + 4 comandi + 2 agenti + `_templates/`, `bin/`, `scripts/` copiati da `_forks/claude-obsidian/`
-  - Hook `hooks/hooks.json` mergiato: pending counter (mio v0.2.0) + 4 hook funzionali del fork (SessionStart hot.md restore, PostCompact, PostToolUse auto-commit, Stop wiki-changed)
-  - Plugin Claude Code: solo `aude-plugin@aude-plugin-marketplace` installato (claude-obsidian disinstallato)
+- **Versione plugin:** v0.4.0 (2026-05-05)
+- **Vendoring iniziale completato**: 11 skill + 6 comandi (autoresearch, canvas, save, wiki, inizio-sessione, fine-sessione) + 2 agenti
+- **Plugin Claude Code installato**: solo `aude-plugin@aude-plugin-marketplace v0.4.0`
 
-### Prossime modifiche pianificate (RFC P1 in `aude-docs/proposals/`)
+### Prossime modifiche pianificate (RFC attive)
 
-Vedi [aude-docs/proposals/_README.md](https://github.com/neridavide27-stack/aude-docs/blob/main/proposals/_README.md). Le 6 RFC P1 prossime da implementare:
-
-- [RFC 0001](https://github.com/neridavide27-stack/aude-docs/blob/main/proposals/0001-skill-save-pending-nativo.md) — Skill `/save` con pending nativo
-- [RFC 0002](https://github.com/neridavide27-stack/aude-docs/blob/main/proposals/0002-comando-promote.md) — Comando `/promote` (nuovo)
-- [RFC 0003](https://github.com/neridavide27-stack/aude-docs/blob/main/proposals/0003-skill-wiki-ingest-pending-nativo.md) — Skill `/wiki-ingest` con pending nativo
-- [RFC 0004](https://github.com/neridavide27-stack/aude-docs/blob/main/proposals/0004-skill-autoresearch-pending-nativo.md) — Skill `/autoresearch` con pending nativo
-- [RFC 0005](https://github.com/neridavide27-stack/aude-docs/blob/main/proposals/0005-comando-discard.md) — Comando `/discard` (nuovo)
-- [RFC 0006](https://github.com/neridavide27-stack/aude-docs/blob/main/proposals/0006-comando-review-queue.md) — Comando `/review-queue` (dashboard)
+Vedi [[../proposals/index]] per la lista corrente. Le RFC P1 storiche (skill `/save` con pending nativo, comandi `/promote`, `/discard`, `/review-queue`, ecc.) erano in roadmap precedente — oggi vivono come voci della roadmap "Cose da fare" o come RFC formalizzate quando arriva il momento di implementarle.
 
 ---
 
@@ -53,26 +46,26 @@ Vedi [aude-docs/proposals/_README.md](https://github.com/neridavide27-stack/aude
 
 **Non ha upstream**: zero conflitti per sempre. Tutto è sotto il tuo controllo.
 
-Le repo fonti (`~/Developer/_forks/`) hanno upstream e vengono sincronizzate mensilmente. Tu pesi codice da loro e lo modifichi qui senza vincoli.
+Le repo fonti (`../sources-tracking/forks/`) hanno upstream e vengono sincronizzate mensilmente. Tu peschi codice da loro e lo modifichi qui senza vincoli.
 
 ---
 
 ## Struttura della repo
 
 ```
-aude-plugin/
+plugin/
 ├── .claude-plugin/
 │   ├── plugin.json          ← descrizione del plugin (versione, autore)
 │   └── marketplace.json     ← descrizione del marketplace
-├── commands/                ← slash commands (es. /autoresearch, /save, /wiki, /canvas)
+├── commands/                ← slash commands (autoresearch, canvas, save, wiki, inizio-sessione, fine-sessione)
 ├── skills/                  ← skill complete (definite via SKILL.md con frontmatter)
-│   ├── autoresearch/, canvas/, defuddle/, save/, wiki/, ...   (11 skill vendorate)
+│   └── (autoresearch, canvas, defuddle, obsidian-bases, obsidian-markdown, save, wiki, wiki-fold, wiki-ingest, wiki-lint, wiki-query)
 ├── hooks/
 │   └── hooks.json           ← SessionStart pending counter + 4 hook funzionali
 ├── agents/                  ← subagent specializzati (wiki-ingest, wiki-lint)
 ├── _templates/              ← template per i tipi di pagina del vault
-├── bin/                     ← script bash di setup (setup-vault.sh, setup-dragonscale.sh)
-├── scripts/                 ← script Python (boundary-score, tiling-check, allocate-address)
+├── bin/                     ← script bash di setup
+├── scripts/                 ← script Python utility
 ├── README.md
 ├── LICENSE
 ├── CHANGELOG.md
@@ -83,35 +76,35 @@ aude-plugin/
 
 ## Workflow per modifiche al codice
 
-### Caso A — Modifico una skill esistente in aude-plugin
+### Caso A — Modifico una skill esistente in `plugin/`
 
 Skill già vendorata e presente in `skills/<nome>/SKILL.md`. Modifica diretta del file.
 
-**Procedura completa**: [aude-docs/runbook/modificare-skill.md](https://github.com/neridavide27-stack/aude-docs/blob/main/runbook/modificare-skill.md)
+**Procedura completa**: [[../runbook/modificare-skill]]
 
 ### Caso B — Voglio modificare una skill che esiste solo in una fonte (non ancora copiata)
 
-1. Vendora dalla fonte in aude-plugin:
+1. Vendora dalla fonte a plugin:
    ```bash
-   cp -r ~/Developer/_forks/<fonte>/skills/<nome> ~/Developer/aude-plugin/skills/
+   cp -r ~/Developer/Aude/sources-tracking/forks/<fonte>/skills/<nome> ~/Developer/Aude/plugin/skills/
    ```
-2. Aggiungi voce in `~/Developer/aude-docs/sources-tracking/<fonte>.md`
-3. Modifica liberamente la copia in aude-plugin
+2. Aggiorna voce in `~/Developer/Aude/sources-tracking/<fonte>.md`
+3. Modifica liberamente la copia in plugin
 4. Commit + push + plugin update
 
 ### Caso C — Voglio una skill totalmente nuova (no fonte)
 
 Crea direttamente `skills/<nome>/SKILL.md` o `commands/<nome>.md`.
 
-**Procedura completa**: [aude-docs/runbook/creare-skill-nuova.md](https://github.com/neridavide27-stack/aude-docs/blob/main/runbook/creare-skill-nuova.md)
+**Procedura completa**: [[../runbook/creare-skill-nuova]]
 
 ### Caso D — Aggiungo una nuova fonte
 
-Procedura in `aude-docs/runbook/aggiungere-fonte.md`. In sintesi:
-1. `git clone <repo>` in `~/Developer/_forks/<nome-fonte>/`
+Procedura in [[../runbook/aggiungere-fonte]]. In sintesi:
+1. `git clone <repo>` in `~/Developer/Aude/sources-tracking/forks/<NNNN>-<nome-fonte>/`
 2. Studia cosa fa
-3. Vendora skill specifiche in aude-plugin (Caso B)
-4. Crea file di tracking in `~/Developer/aude-docs/sources-tracking/<nome-fonte>.md`
+3. Vendora skill specifiche in plugin (Caso B)
+4. Crea file di tracking in `~/Developer/Aude/sources-tracking/<NNNN>-<nome-fonte>.md`
 
 ---
 
@@ -119,9 +112,9 @@ Procedura in `aude-docs/runbook/aggiungere-fonte.md`. In sintesi:
 
 1. Modifichi/crei file in `commands/`, `skills/`, `hooks/`, `agents/`
 2. Aggiorni `CHANGELOG.md` (sezione `[Unreleased] → Aggiunto/Modificato`)
-3. Bump versione in `.claude-plugin/plugin.json` (semver: nuova feature `0.x.0 → 0.(x+1).0`, bugfix `0.x.y → 0.x.(y+1)`)
+3. Bump versione in `.claude-plugin/plugin.json` E `.claude-plugin/marketplace.json` (semver: nuova feature `0.x.0 → 0.(x+1).0`, bugfix `0.x.y → 0.x.(y+1)`)
 4. `git add . && git commit -m "..." && git push origin main`
-5. In Claude Code: `claude plugin update aude-plugin` per scaricare la nuova versione
+5. In Claude Code: `claude plugin update aude-plugin@aude-plugin-marketplace` per scaricare la nuova versione
 6. Riavvio Claude Code → modifica disponibile
 
 ---
@@ -144,47 +137,51 @@ Procedura in `aude-docs/runbook/aggiungere-fonte.md`. In sintesi:
 - `0.x.y → 0.x.(y+1)`: bugfix o miglioramento minore
 - `0.x.y → 1.0.0`: prima release stabile (quando il plugin è "pronto")
 
-Versione attuale: **0.3.0** (vendoring iniziale completato).
+Versione attuale: **0.4.0** (comandi `/inizio-sessione` e `/fine-sessione` aggiunti il 2026-05-05).
 
 ---
 
 ## Test prima di pushare
 
-1. Lancia il comando in Claude Code (su una sessione di test, idealmente nel vault `~/Desktop/Aude/`)
+1. Lancia il comando in Claude Code (su una sessione di test, idealmente nel monorepo `~/Developer/Aude/`)
 2. Verifica che faccia quello che ci si aspetta
-3. Solo dopo: commit + push + `claude plugin update aude-plugin`
+3. Solo dopo: commit + push + `claude plugin update aude-plugin@aude-plugin-marketplace`
 
 ---
 
 ## REGOLE ARCHITETTONICHE — leggi prima di proporre modifiche
 
-> **Tutte le modifiche al codice del sistema vivono qui (aude-plugin).** La documentazione di progetto vive in `~/Developer/aude-docs/`. Le repo fonti (`~/Developer/_forks/`) restano intatte.
+> **Tutte le modifiche al codice del sistema vivono qui (`plugin/`).** La documentazione di progetto vive in `../decisions/`, `../proposals/`, `../runbook/`. Le repo fonti (`../sources-tracking/forks/`) restano intatte.
 
 ### Decision tree per Davide
 
 | Davide chiede | Cartella di lavoro | Note |
 |---|---|---|
-| Modifica/aggiunta di una skill, comando, hook, agente | **Qui** (`~/Developer/aude-plugin/`) | Vedi i Casi A-C sopra |
-| Vendoring di una skill da una fonte | **Qui** (vendoring), poi **`aude-docs/sources-tracking/`** (annotare) | Vedi runbook `modificare-skill.md` |
-| Aggiunta nuova fonte | **`~/Developer/_forks/`** (clone) + **`aude-docs/sources-tracking/`** (tracking) | Vedi runbook `aggiungere-fonte.md` |
-| Una nuova decisione architettonica | **`~/Developer/aude-docs/decisions/`** (ADR) | Numerazione progressiva |
-| Una proposta di feature concreta | **`~/Developer/aude-docs/proposals/`** (RFC) | Numerazione progressiva |
-| Aggiornare nota/conoscenza personale | **`~/Desktop/Aude/wiki/`** (vault) | Workflow pending |
+| Modifica/aggiunta di una skill, comando, hook, agente | **Qui** (`plugin/`) | Vedi i Casi A-C sopra |
+| Vendoring di una skill da una fonte | **Qui** (vendoring), poi **`../sources-tracking/`** (annotare) | Vedi [[../runbook/modificare-skill]] |
+| Aggiunta nuova fonte | **`../sources-tracking/forks/`** (clone) + **`../sources-tracking/`** (tracking) | Vedi [[../runbook/aggiungere-fonte]] |
+| Una nuova decisione architettonica | **`../decisions/`** (ADR) | Numerazione progressiva |
+| Una proposta di feature concreta | **`../proposals/`** (RFC) | Numerazione progressiva |
+| Aggiornare nota/conoscenza personale | **`../wiki/`** (knowledge base) | Workflow pending |
 
 ### Prima di proporre modifiche, leggi
 
-1. `~/Developer/aude-docs/README.md` — entry point del handbook
-2. `~/Developer/aude-docs/CLAUDE.md` — regole prescrittive per agenti
-3. `~/Developer/aude-docs/decisions/0013-architettura-vendor-custom-plugin.md` — architettura corrente
-4. `~/.claude/CLAUDE.md` — regole globali di Davide
+1. [[../README]] — entry point del monorepo
+2. [[../CLAUDE]] — regole prescrittive del monorepo
+3. [[../decisions/0001-architettura-vendor-custom-plugin|ADR 0001]] — architettura vendor + custom
+4. [[../decisions/0007-monorepo-aude|ADR 0007]] — monorepo Aude
+5. `~/.claude/CLAUDE.md` — regole globali di Davide
 
 ---
 
 ## Vedi anche
 
-- [README.md](aude-plugin/README.md)
-- [CHANGELOG.md](CHANGELOG.md)
-- [aude-docs/decisions/0013](https://github.com/neridavide27-stack/aude-docs/blob/main/decisions/0013-architettura-vendor-custom-plugin.md) — architettura
-- [aude-docs/runbook/modificare-skill.md](https://github.com/neridavide27-stack/aude-docs/blob/main/runbook/modificare-skill.md) — workflow vendor + custom
-- [aude-docs/sources-tracking/claude-obsidian.md](https://github.com/neridavide27-stack/aude-docs/blob/main/sources-tracking/claude-obsidian.md) — tracking della fonte principale
-- [aude-docs/proposals/README.md](https://github.com/neridavide27-stack/aude-docs/blob/main/proposals/_README.md) — RFC delle prossime feature
+- [[README]] — README del plugin
+- [[CHANGELOG]] — storia del plugin
+- [[../decisions/0001-architettura-vendor-custom-plugin|ADR 0001]] — architettura
+- [[../decisions/0005-aude-plugin-dentro-aude-docs|ADR 0005]] — plugin spostato dentro il monorepo
+- [[../decisions/0007-monorepo-aude|ADR 0007]] — monorepo Aude
+- [[../runbook/modificare-skill]] — workflow vendor + custom
+- [[../runbook/creare-skill-nuova]] — workflow nuova skill
+- [[../runbook/aggiungere-fonte]] — workflow aggiungere fonte
+- [[../sources-tracking/CLAUDE]] — regole tracking fonti
