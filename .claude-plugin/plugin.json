@@ -1,6 +1,6 @@
 {
   "name": "aude-plugin",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Repo principale del sistema Aude di Davide Neri. Plugin Claude Code che ospita skill, comandi, hook e agenti del sistema. Architettura 'vendor + custom' (ADR 0013): i contributi dalle repo fonti (claude-obsidian, future) vengono copiati qui e modificati internamente. Workflow JIT folders + pending integrato.",
   "author": {
     "name": "Davide Neri",

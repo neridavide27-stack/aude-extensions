@@ -5,6 +5,17 @@ Tutti i cambiamenti significativi a `aude-plugin` (ex `aude-extensions`) sono do
 Formato basato su [Keep a Changelog](https://keepachangelog.com/it/1.1.0/).
 Versioning secondo [Semantic Versioning](https://semver.org/lang/it/).
 
+## [0.4.0] - 2026-05-05
+
+### Aggiunto
+
+- **Comando `/inizio-sessione`**: apre una sessione di lavoro su `aude-docs/` con riepilogo strutturato (Cose da fare + 3 sezioni RFC + handoff della sessione precedente). Implementa parte di RFC 0002 di `aude-docs`.
+- **Comando `/fine-sessione`**: chiude la sessione di lavoro con 5 step automatici (cancellazione voci roadmap completate, scrittura `handoff.md` con template a 9 sezioni, aggiornamento `CHANGELOG.md`, check igiene, git update finale). Lo step di refresh dello snapshot della roadmap è automatizzato dal hook `PostToolUse` su `aude-docs/`.
+
+### Note di rilascio
+
+I comandi sono pensati per essere lanciati esplicitamente all'apertura/chiusura di una sessione di lavoro. Il loro funzionamento dipende dallo script Python `regenerate-roadmap.py` e dal hook `PostToolUse` definiti nel repo `aude-docs/`, non in questo plugin.
+
 ## [0.3.0] - 2026-05-03
 
 ### Cambiato (BREAKING)
